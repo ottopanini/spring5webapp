@@ -26,14 +26,23 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        Publisher amzonMedia = new Publisher(" Amazon Media EU S.à r.l.",
+                new Address("test", "Berlin", "test", "12345"));
+
+        publisherRepository.save(amzonMedia);
+
         Author eric = new Author("Eric", "Evans");
         Book ddd = new Book("Domain Driven Design", "123123");
 
         eric.getBooks().add(ddd);
         ddd.getAuthors().add(eric);
 
+        ddd.setPublisher(amzonMedia);
+        amzonMedia.getBooks().add(ddd);
+
         authorRepository.save(eric);
         bookRepository.save(ddd);
+        publisherRepository.save(amzonMedia);
 
         Author rod = new Author("Rod", "Johnson");
         Book noEJB = new Book("J2EE Development without EJB", "39323564559");
@@ -41,16 +50,16 @@ public class BootStrapData implements CommandLineRunner {
         rod.getBooks().add(noEJB);
         noEJB.getAuthors().add(rod);
 
+        noEJB.setPublisher(amzonMedia);
+        amzonMedia.getBooks().add(noEJB);
+
         authorRepository.save(rod);
         bookRepository.save(noEJB);
-
-        Publisher amzonMedia = new Publisher(" Amazon Media EU S.à r.l.",
-                new Address("test", "Berlin", "test", "12345"));
-
         publisherRepository.save(amzonMedia);
 
         System.out.println("Started in Bootstrap");
         System.out.println("Number of Books: " + bookRepository.count());
         System.out.println("Publisher: " + amzonMedia);
+        System.out.println("Publisher number of books:" + amzonMedia.getBooks().size());
     }
 }
