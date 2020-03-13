@@ -1,5 +1,6 @@
 package guru.springframework.spring5webapp.bootstrap;
 
+import guru.springframework.spring5webapp.domain.Address;
 import guru.springframework.spring5webapp.domain.Author;
 import guru.springframework.spring5webapp.domain.Book;
 import guru.springframework.spring5webapp.domain.Publisher;
@@ -43,15 +44,13 @@ public class BootStrapData implements CommandLineRunner {
         authorRepository.save(rod);
         bookRepository.save(noEJB);
 
-        Publisher amzonMedia = new Publisher(" Amazon Media EU S.à r.l.");
-
-        amzonMedia.getBooks().add(ddd);
-        ddd.setPublisher(amzonMedia);
+        Publisher amzonMedia = new Publisher(" Amazon Media EU S.à r.l.",
+                new Address("test", "Berlin", "test", "12345"));
 
         publisherRepository.save(amzonMedia);
-        bookRepository.save(ddd);
 
         System.out.println("Started in Bootstrap");
         System.out.println("Number of Books: " + bookRepository.count());
+        System.out.println("Publisher: " + amzonMedia);
     }
 }

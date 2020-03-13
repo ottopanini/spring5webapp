@@ -1,9 +1,10 @@
 package guru.springframework.spring5webapp.domain;
 
-import javax.persistence.*;
-import java.util.HashSet;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class Publisher {
@@ -13,11 +14,11 @@ public class Publisher {
 
     private String name;
 
-    @OneToMany(mappedBy = "publisher")
-    private Set<Book> books = new HashSet<>();
+    private Address address;
 
-    public Publisher(String name) {
+    public Publisher(String name, Address address) {
         this.name = name;
+        this.address = address;
     }
 
     public Publisher() {
@@ -54,14 +55,15 @@ public class Publisher {
         return "Publisher{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", address=" + address +
                 '}';
     }
 
-    public Set<Book> getBooks() {
-        return books;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setBooks(Set<Book> books) {
-        this.books = books;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
